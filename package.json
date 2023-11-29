@@ -1,5 +1,5 @@
 {
-  "name": "deeplx-vercel",
+  "name": "vercel-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,7 +13,6 @@
   "dependencies": {
     "@hono/node-server": "^1.2.3",
     "@ifyour/deeplx": "^0.1.14",
-    "express": "^4.18.2",
     "hono": "^3.10.0"
   }
 }
