@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import {sql} from '@vercel/postgres'
 import { Err,Ok } from "../../helper/result.js";
+import {sign} from 'hono/jwt'
 
 const auth = new Hono();
 
@@ -12,11 +13,18 @@ auth.post('/login',async c =>{
     return c.json(new Err('email or password is required'))
   }
   const {rows} = await sql`select * from users where email = ${email}`
-  if(!rows.length || rows[0].password!== password){
+  const user = rows[0]
+  if(!user || user.password!== password){
     return c.json(new Err('email or password is wrong'))
   }
-  rows[0].password = undefined
-  return c.json(new Ok(rows[0],'登录成功'))
+  user.password = undefined
+  const res = new Ok(user,'登录成功')
+  const payload = {
+    email:user.email,
+    id:user.id,
+  }
+  res.token = await sign(payload,process.env.JWT_SECRET)
+  return c.json(res)
 })
 
 // 注册

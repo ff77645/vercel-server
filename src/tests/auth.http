@@ -1,7 +1,7 @@
 @host = http://localhost:5000/api
 @email = test_1@qq.com
 @password = 123456
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RfMUBxcS5jb20iLCJpZCI6M30.HXbC6gJJ3fbypSa3Q8pxwcm-YiJqoAWlbcNCvZlGbS8
 
 ### login
 post {{host}}/auth/login
@@ -20,3 +20,7 @@ Content-Type: application/json
   "email": "{{email}}",
   "password": "{{password}}"
 }
+
+### jwt test
+get {{host}}/jwt/test
+# Authorization: {{token}}
